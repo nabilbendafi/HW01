@@ -10,6 +10,7 @@ Welcome to hw01's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   design.rst
    api.rst
 
 Indices and tables

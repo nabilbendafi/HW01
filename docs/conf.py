@@ -39,6 +39,7 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.intersphinx'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -150,6 +151,6 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'hw01', 'hw01 Documentation',
-     author, 'hw01', 'One line description of project.',
-     'Miscellaneous'),
+     author, 'hw01', 'API for Lenovo HW01 wristband',
+     'Health'),
 ]
