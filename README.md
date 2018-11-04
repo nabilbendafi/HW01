@@ -36,6 +36,10 @@ attr handle: 0x000f, end grp handle: 0x0014 uuid: 0000190b-0000-1000-8000-00805f
 attr handle: 0x0015, end grp handle: 0xffff uuid: 0000fee7-0000-1000-8000-00805f9b34fb
 ```
 
+Documentation
+-------------
+[hw01’s documentation](https://nabilbendafi.github.io/HW01/index.html)
+
 References
 ----------
  - [creotiv/MiBand2](https://github.com/creotiv/MiBand2)
