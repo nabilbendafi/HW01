@@ -25,7 +25,7 @@ Binding is not permitted when device is already bond to another host.
 Commands
 --------
 
-Lenovo HW01 smart watch answers to a set of commands. Each command starts with **AT+** [#AT]_ and is followed ASCII strings representing:
+Lenovo HW01 smart watch answers to a set of commands. Each command starts with **AT+** [#AT]_ and is followed by ASCII strings representing:
   - Command name
   - Optional parameters (separated by commas)
 
@@ -36,9 +36,9 @@ Example:
     AT+command
 
 
-Commands can used to :
-  - Request data
-  - Configure the device. In this case "`=`" sign is used to specifiy arguments
+Commands can be used to :
+  - Request data.
+  - Configure the device (In this case "`=`" sign is used to specifiy arguments).
 
 Example:
 
