@@ -40,6 +40,13 @@ Documentation
 -------------
 [hw01’s documentation](https://nabilbendafi.github.io/HW01/index.html)
 
+Test
+----
+```bash
+pip install -r dev-requirements.txt
+./setup.py nosetests
+```
+
 References
 ----------
  - [creotiv/MiBand2](https://github.com/creotiv/MiBand2)

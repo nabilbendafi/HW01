@@ -19,5 +19,10 @@ setup(
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
     install_requires=['bluepy'],
+    tests_suite='nose.collector',
+    tests_require=[
+        'nose',
+        'coverage',
+    ]
 )
 

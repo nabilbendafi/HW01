@@ -9,7 +9,7 @@ from uuid import UUID
 
 from bluepy.btle import Peripheral, Characteristic, Scanner, DefaultDelegate, ADDR_TYPE_RANDOM, BTLEException
 
-from constants import UUIDS
+from .constants import UUIDS
 
 
 class TXDelegate(DefaultDelegate):
