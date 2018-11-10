@@ -107,14 +107,14 @@ class HW01TestSuite(unittest.TestCase):
         self.assertEqual(self.h.get_device_name(), 'HW01')
 
     @mock.patch('hw01.HW01.get_raw', return_value='AT+BATT:80')
-    def test_battery_info(self, mock_battery_info):
+    def test_battery_level(self, _):
         """Test battery level"""
         self.h = HW01('XX:XX:XX:XX:XX:XX')
 
-        self.assertEqual(self.h.get_battery_info(), 80)
+        self.assertEqual(self.h.get_battery_level(), 80)
 
     @mock.patch('hw01.HW01.get_raw', return_value='AT+SN:HW19999999')
-    def test_serial_number(self, mock_battery_info):
+    def test_serial_number(self, _):
         """Test device serial number"""
         self.h = HW01('XX:XX:XX:XX:XX:XX')
 

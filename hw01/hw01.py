@@ -113,7 +113,7 @@ class HW01(Peripheral):
         raw = self.delegate.data
         return raw.decode('utf-8').strip()
 
-    def get_battery_info(self):
+    def get_battery_level(self):
         """Get battery level information.
 
         Returns:
