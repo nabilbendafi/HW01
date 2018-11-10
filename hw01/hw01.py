@@ -18,7 +18,7 @@ class TXDelegate(DefaultDelegate):
         self.data = None
         if self.handle != handle:
             return
-        self._log.debug('Notification on %s: %s' % (handle, data))
+        self._log.debug('Notification on 0x%x: %s' % (handle, data))
         self.data = data
 
 
