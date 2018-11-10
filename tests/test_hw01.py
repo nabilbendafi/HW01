@@ -3,7 +3,7 @@ import unittest
 from unittest import mock
 
 from bluepy.btle import Service, Characteristic, Descriptor
-from hw01 import HW01
+from hw01 import HW01, UUIDS, TXDelegate
 
 
 class HW01TestSuite(unittest.TestCase):
@@ -44,17 +44,17 @@ class HW01TestSuite(unittest.TestCase):
         self.h = HW01('XX:XX:XX:XX:XX:XX')
 
         services = []
-        for service in ['1800', '190b']:
-            services.append(Service(self.h, '0000%s-0000-1000-8000-00805f9b34fb' % service, 0x0, 0xffff))
+        for uuid in [UUIDS.SERVICE_GENERIC, UUIDS.SERVICE_HW01_B]:
+            services.append(Service(self.h, uuid, 0x0, 0xffff))
         mock_getsrv.side_effect = services
 
         characteristics = []
-        for char in ['2a00', '0003', '0004']:
-            characteristics.append([Characteristic(self.h, '0000%s-0000-1000-8000-00805f9b34fb' % char,
+        for uuid in [UUIDS.CHARACTERISTIC_DEVICE_NAME, UUIDS.CHARACTERISTIC_TX, UUIDS.CHARACTERISTIC_RX]:
+            characteristics.append([Characteristic(self.h, uuid,
                                                    0x47, [0b00000010, 0b00001000], 0x47)])
         mock_getchar.side_effect = characteristics
 
-        mock_desc = [Descriptor(self.h, '00002902-0000-1000-8000-00805f9b34fb', 0x12)]
+        mock_desc = [Descriptor(self.h, UUIDS.NOTIFICATION_DESCRIPTOR, 0x12)]
         mock_getdesc.return_value = mock_desc
 
         with mock.patch('bluepy.btle.Descriptor.read', return_value=(b'\x01\x00')):
@@ -63,6 +63,37 @@ class HW01TestSuite(unittest.TestCase):
                     self.h.setup_services()
 
         self.assertEqual(log.output, ['INFO:HW01:Setup RX/TX communication'])
+
+    def test_notification_for_expected_handle(self):
+        """Test Bluetooth notification for TX channel"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+        mock_char = Characteristic(self.h, UUIDS.CHARACTERISTIC_TX,
+                                   0x14, [0b00010000], 0x14)
+
+        tx_delegate = TXDelegate(mock_char.getHandle(), self.h._log)
+        self.h.setDelegate(tx_delegate)
+
+        self.assertEqual(tx_delegate.data, None)
+
+        # Trigger notification with expected handle
+        self.h.delegate.handleNotification(0x14, 'AT+??')
+        self.assertEqual(tx_delegate.data, 'AT+??')
+
+    def test_notification_for_unexpected_handle(self):
+        """Test Bluetooth notification for unexpected handle"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+        mock_char = Characteristic(self.h, UUIDS.CHARACTERISTIC_TX,
+                                   0x14, [0b00010000], 0x14)
+
+        tx_delegate = TXDelegate(mock_char.getHandle(), self.h._log)
+        self.h.setDelegate(tx_delegate)
+
+        self.assertEqual(tx_delegate.data, None)
+
+        # Trigger notification with expected handle
+        self.h.delegate.handleNotification(0xff, 'AT+??')
+        self.assertEqual(tx_delegate.data, None)
+
 
     @mock.patch('bluepy.btle.Characteristic.read', return_value='HW01')
     def test_device_name(self, mock_device_name):

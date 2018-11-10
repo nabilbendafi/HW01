@@ -1,13 +1,7 @@
-import binascii
 import logging
-import struct
 import sys
-import time
 
-from datetime import datetime
-from uuid import UUID
-
-from bluepy.btle import Peripheral, Characteristic, Scanner, DefaultDelegate, ADDR_TYPE_RANDOM, BTLEException
+from bluepy.btle import Peripheral, Scanner, DefaultDelegate, ADDR_TYPE_RANDOM, BTLEException
 
 from .constants import UUIDS
 
@@ -21,8 +15,10 @@ class TXDelegate(DefaultDelegate):
         self.data = None
 
     def handleNotification(self, handle, data):
+        self.data = None
         if self.handle != handle:
-            pass
+            return
+        self._log.debug('Notification on %s: %s' % (handle, data))
         self.data = data
 
 
@@ -94,7 +90,7 @@ class HW01(Peripheral):
         self._log.debug('\t%s' % ('Enabled' if self.tx_desc.read() == b'\x01\x00' else 'Disabled'))
 
         # Enable notification handler
-        self.setDelegate(TXDelegate(self.tx_char, self._log))
+        self.setDelegate(TXDelegate(self.tx_char.getHandle(), self._log))
 
         # RX channel (host to device)
         self.rx_char = self.service_hw01.getCharacteristics(UUIDS.CHARACTERISTIC_RX)[0]
