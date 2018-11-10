@@ -110,7 +110,8 @@ class HW01(Peripheral):
         """
         self.rx_char.write(command)
         self.waitForNotifications(1.0)
-        return self.delegate.data
+        raw = self.delegate.data
+        return raw.decode('utf-8').strip()
 
     def get_battery_info(self):
         """Get battery level information.
