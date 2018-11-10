@@ -1,4 +1,4 @@
-Lenovo HW01
+Lenovo HW01 [![Build Status](https://travis-ci.org/nabilbendafi/HW01.svg?branch=master)](https://travis-ci.org/nabilbendafi/HW01)
 ===========
 
 Library to work with Lenovo HW01. To be used in place of Android [Lenovo Healthy](https://play.google.com/store/apps/details?id=com.lenovohw.base.framework) app.
