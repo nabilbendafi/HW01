@@ -39,7 +39,10 @@ class HW01(Peripheral):
         self.mac_address = mac_address
         self.state = None
 
-        if not mac_address:
+        Peripheral.__init__(self)
+
+    def connect(self):
+        if not self.mac_address:
             self._log.info('No mac address provided, start BTLE scanning for HW01...')
             scanner = Scanner()
 
@@ -57,13 +60,13 @@ class HW01(Peripheral):
                 self._log.error('Fail to scan BTLE')
                 sys.exit(1)
 
-        self._log.info('Connecting to ' + mac_address)
         try:
-            Peripheral.__init__(self, mac_address, addrType=ADDR_TYPE_RANDOM)
+            self._log.info('Connecting to ' + self.mac_address)
+            super(HW01, self).connect(self.mac_address, addrType=ADDR_TYPE_RANDOM)
             self._log.info('Connected')
             self.state = 'connected'
         except:
-            self._log.error('Failed to established connection to ' + mac_address)
+            self._log.error('Failed to established connection to ' + self.mac_address)
             sys.exit(1)
 
         # Let HW01 to settle
@@ -100,23 +103,49 @@ class HW01(Peripheral):
         """Returns device name."""
         return self.device_char.read()
 
-    def get_battery_info(self):
-        """Returns battery level information."""
-        command = b'AT+BATT'
+    def get_raw(self, command):
+        """Send AT command request and return device response.
+
+        Args:
+            command: AT command to write on :const:`UUIDS.CHARACTERISTIC_RX`
+
+        Returns:
+            str: Raw data received on :const:`UUIDS.CHARACTERISTIC_TX`
+        """
         self.rx_char.write(command)
         self.waitForNotifications(1.0)
         return self.delegate.data
+
+    def get_battery_info(self):
+        """Get battery level information.
+
+        Returns:
+            int: Battery level in percentage
+        """
+        command = b'AT+BATT'
+        raw = self.get_raw(command)
+        try:
+            level = int(raw.split(':')[-1])
+        except ValueError:
+            self._log.error('Failed to parse battery level')
+        return level
 
     def set_seat(self):
-        """Returns battery level information."""
+        """Set sedentary timeout."""
         command = b'AT+SIT=0,0900,1800,0'
-        self.rx_char.write(command)
-        self.waitForNotifications(1.0)
-        return self.delegate.data
+        raw = self.get_raw(command)
+        return raw
 
     def get_serial_number(self):
-        """Returns battery level information."""
+        """Get device serial number
+
+        Returns:
+            str: Device serial number
+        """
         command = b'AT+SN'
-        self.rx_char.write(command)
-        self.waitForNotifications(1.0)
-        return self.delegate.data
+        raw = self.get_raw(command)
+        try:
+            serial_number = raw.split(':')[1]
+        except IndexError:
+            self._log.error('Failed to parse serial number')
+        return serial_number
