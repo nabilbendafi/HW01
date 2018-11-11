@@ -213,6 +213,22 @@
 </div>
 <div class="section" id="second-alarm">
 <h3>Second alarm<a class="headerlink" href="#second-alarm" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Request</th>
+<th class="head">Response</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>AT+ALARM2=<cite>A,BB,activation,time</cite></td>
+<td>AT+ALARM2:<cite>A,BB,activation,time</cite></td>
+</tr>
+</tbody>
+</table>
 <p>Example:</p>
 <blockquote>
 <div><div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AT</span><span class="o">+</span><span class="n">ALARM2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">00</span><span class="p">,</span><span class="mi">000000001</span><span class="p">,</span><span class="mi">1000</span>
@@ -221,6 +237,50 @@
 <p>will setup an alarm at <strong>10:00</strong> on Saturday only</p>
 </div></blockquote>
 </div>
+</div>
+<div class="section" id="distance-units">
+<h2>Distance units<a class="headerlink" href="#distance-units" title="Permalink to this headline">¶</a></h2>
+<p>Switch between <a class="reference external" href="https://en.wikipedia.org/wiki/Imperial_units">Imperial units</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Metric_units">Metric units</a></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Request</th>
+<th class="head">Response</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>AT+UNITS=<cite>unit</cite></td>
+<td>AT+UNITS:<cite>unit</cite></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils" id="id5">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>unit</cite></td>
+<td><strong>0</strong> for <em>Imperial</em> (Mile), <strong>1</strong> for <em>Metric</em> (Kilometer)</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<blockquote>
+<div><div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AT</span><span class="o">+</span><span class="n">UNITS</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>will display distance in <em>Kilometers</em></p>
+</div></blockquote>
 </div>
 <div class="section" id="sedentary">
 <h2>Sedentary<a class="headerlink" href="#sedentary" title="Permalink to this headline">¶</a></h2>
@@ -241,8 +301,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id5">
-<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id6">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -301,6 +361,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#battery-level">Battery level</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#serial-number">Serial number</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#alarms">Alarms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distance-units">Distance units</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sedentary">Sedentary</a></li>
 </ul>
 </li>
