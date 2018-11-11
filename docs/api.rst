@@ -123,7 +123,7 @@ Second alarm
    * - Request
      - Response
    * - AT+ALARM2=\ `A,BB,activation,time`
-   * - AT+ALARM2:\ `A,BB,activation,time`
+     - AT+ALARM2:\ `A,BB,activation,time`
 
 Example:
 
