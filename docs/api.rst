@@ -134,6 +134,35 @@ Example:
   will setup an alarm at **10:00** on Saturday only
 
 
+Distance units
+--------------
+
+Switch between `Imperial units <https://en.wikipedia.org/wiki/Imperial_units>`_ and `Metric units <https://en.wikipedia.org/wiki/Metric_units>`_
+
+.. list-table::
+   :header-rows: 1
+
+   * - Request
+     - Response
+   * - AT+UNITS=\ `unit`
+     - AT+UNITS:`unit`
+
+.. list-table:: Field description
+   :header-rows: 1
+
+   * - Field
+     - Description
+   * - `unit`
+     - **0** for *Imperial* (Mile), **1** for *Metric* (Kilometer)
+
+Example:
+
+  .. code::
+
+    AT+UNITS=1
+
+  will display distance in *Kilometers*
+
 Sedentary
 ---------
 

@@ -120,5 +120,28 @@ class HW01TestSuite(unittest.TestCase):
 
         self.assertEqual(self.h.get_serial_number(), 'HW19999999')
 
+    @mock.patch('hw01.HW01.get_raw')
+    def test_distance_unit(self, mock_raw):
+        """Test setting displayed distance unit"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+
+        mock_raw.side_effect = ['AT+UNITS:1', 'AT+UNITS:0']
+
+        units = ['metric', 'imperial']
+
+        with self.assertLogs('HW01') as log:
+            for unit in units:
+                self.h.set_distance_unit(unit)
+
+        self.assertEqual(log.output, ['INFO:HW01:Distance unit set to metric',
+                                      'INFO:HW01:Distance unit set to imperial'])
+
+    @mock.patch('hw01.HW01.get_raw')
+    def test_distance_unknown_unit(self, mock_raw):
+        """Test setting displayed distance unit with unknown unit"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+
+        self.assertRaises(KeyError, self.h.set_distance_unit('unknown'))
+
 if __name__ == '__main__':
     unittest.main()

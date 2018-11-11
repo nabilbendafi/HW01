@@ -146,3 +146,25 @@ class HW01(Peripheral):
         except IndexError:
             self._log.error('Failed to parse serial number')
         return serial_number
+
+    def set_distance_unit(self, unit='metric'):
+        """Set displayed distance unit
+
+        Args:
+            unit: Distance unit to set: `metric` or `imperial`
+        """
+        units = {
+            'imperial': 0,
+            'metric': 1
+        }
+
+        try:
+            command = b'AT+UNITS=%i' % units[unit]
+            raw = self.get_raw(command)
+            try:
+                _ = raw.split(':')[1]
+                self._log.info('Distance unit set to %s' % unit)
+            except IndexError:
+                self._log.error('Failed to set distance unit')
+        except KeyError:
+            self._log.error('unit should be within: %s' % ", ".join(units.keys()))

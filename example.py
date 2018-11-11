@@ -12,5 +12,6 @@ if __name__ == '__main__':
     try:
         battery = h.get_battery_info()
         print(battery)
+        h.set_distance_unit('metric')
     except KeyboardInterrupt:
         pass
