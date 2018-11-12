@@ -1,7 +1,13 @@
+"""
+Lenovo HW01 API constants
+"""
 ___all__ = ['UUIDS']
 
 
 class Immutable(type):
+    """ Immutable clas """
+
+    # pylint: disable=no-method-argument
 
     def __call__(*args):
         raise Exception("You can't create instance of immutable object")
@@ -10,7 +16,10 @@ class Immutable(type):
         raise Exception("You can't modify immutable object")
 
 
-class UUIDS(object):
+class UUIDS():
+    """ UUIDS """
+
+    # pylint: disable=too-few-public-methods
 
     __metaclass__ = Immutable
 

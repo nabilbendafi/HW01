@@ -1,3 +1,6 @@
+"""
+Levono HW01 API
+"""
 import logging
 import sys
 
@@ -7,6 +10,7 @@ from .constants import UUIDS
 
 
 class TXDelegate(DefaultDelegate):
+    """ Abstract a delegate class to handle data """
     def __init__(self, handle, log):
         DefaultDelegate.__init__(self)
         self.handle = handle
@@ -14,15 +18,18 @@ class TXDelegate(DefaultDelegate):
 
         self.data = None
 
-    def handleNotification(self, handle, data):
+    def handleNotification(self, cHandle, data):
         self.data = None
-        if self.handle != handle:
+        if self.handle != cHandle:
             return
-        self._log.debug('Notification on 0x%x: %s' % (handle, data))
+        self._log.debug('Notification on 0x%x: %s' % (cHandle, data))
         self.data = data
 
 
 class HW01(Peripheral):
+    """ Abstract a Lenovo HW01 Bluetooth peripheral """
+
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, mac_address=None, timeout=0.5, debug=False):
         fmt = '%(asctime)-15s %(name)s (%(levelname)s) > %(message)s'
@@ -35,9 +42,16 @@ class HW01(Peripheral):
         self.mac_address = mac_address
         self.state = None
 
+        self.service_generic = self.service_hw01 = None
+        self.device_char = None
+        self.tx_char = self.rx_char = None
+        self.tx_desc = None
+
         Peripheral.__init__(self)
 
-    def connect(self):
+    def connect(self): # pylint: disable=arguments-differ
+        """Connect to HW01 peripheral"""
+
         if not self.mac_address:
             self._log.info('No mac address provided, start BTLE scanning for HW01...')
             scanner = Scanner()
@@ -57,12 +71,12 @@ class HW01(Peripheral):
                 sys.exit(1)
 
         try:
-            self._log.info('Connecting to ' + self.mac_address)
+            self._log.info('Connecting to %s', self.mac_address)
             super(HW01, self).connect(self.mac_address, addrType=ADDR_TYPE_RANDOM)
             self._log.info('Connected')
             self.state = 'connected'
-        except:
-            self._log.error('Failed to established connection to ' + self.mac_address)
+        except BTLEException:
+            self._log.error('Failed to established connection to %s', self.mac_address)
             sys.exit(1)
 
         # Let HW01 to settle
@@ -71,23 +85,23 @@ class HW01(Peripheral):
     def setup_services(self):
         """Setup BLTE service for HW01."""
         self.service_generic = self.getServiceByUUID(UUIDS.SERVICE_GENERIC)
-        self.device_char = self.service_generic.getCharacteristics(UUIDS.CHARACTERISTIC_DEVICE_NAME)[0]
+        self.device_char = self.service_generic.getCharacteristics(UUIDS.CHARACTERISTIC_DEVICE_NAME)[0] # pylint: disable=line-too-long
 
         self._log.info('Setup RX/TX communication')
         self.service_hw01 = self.getServiceByUUID(UUIDS.SERVICE_HW01_B)
 
         # Enable TX channel (device to host)
-        self._log.debug('Get characteristics UUID %s' % UUIDS.CHARACTERISTIC_TX)
+        self._log.debug('Get characteristics UUID %s', UUIDS.CHARACTERISTIC_TX)
         self.tx_char = self.service_hw01.getCharacteristics(UUIDS.CHARACTERISTIC_TX)[0]
-        self._log.debug('\tHandle: 0x%04x' % self.tx_char.getHandle())
-        self._log.debug('Get its descriptor UUID %s' % UUIDS.NOTIFICATION_DESCRIPTOR)
+        self._log.debug('\tHandle: 0x%04x', self.tx_char.getHandle())
+        self._log.debug('Get its descriptor UUID %s', UUIDS.NOTIFICATION_DESCRIPTOR)
         self.tx_desc = self.tx_char.getDescriptors(UUIDS.NOTIFICATION_DESCRIPTOR)[0]
-        self._log.debug('\tHandle: 0x%04x' % self.tx_desc.handle)
+        self._log.debug('\tHandle: 0x%04x', self.tx_desc.handle)
         self._log.debug('Check notification status')
-        self._log.debug('\t%s' % ('Enabled' if self.tx_desc.read() == b'\x01\x00' else 'Disabled'))
+        self._log.debug('\t%s', ('Enabled' if self.tx_desc.read() == b'\x01\x00' else 'Disabled'))
         self._log.debug('Enable notification')
         self.tx_desc.write(b'\x01\x00')
-        self._log.debug('\t%s' % ('Enabled' if self.tx_desc.read() == b'\x01\x00' else 'Disabled'))
+        self._log.debug('\t%s', ('Enabled' if self.tx_desc.read() == b'\x01\x00' else 'Disabled'))
 
         # Enable notification handler
         self.setDelegate(TXDelegate(self.tx_char.getHandle(), self._log))
@@ -163,8 +177,8 @@ class HW01(Peripheral):
             raw = self.get_raw(command)
             try:
                 _ = raw.split(':')[1]
-                self._log.info('Distance unit set to %s' % unit)
+                self._log.info('Distance unit set to %s', unit)
             except IndexError:
                 self._log.error('Failed to set distance unit')
         except KeyError:
-            self._log.error('unit should be within: %s' % ", ".join(units.keys()))
+            self._log.error('unit should be within: %s', ", ".join(units.keys()))

@@ -7,3 +7,4 @@ install:
 
 script:
   - nosetests -v --with-coverage
+  - pylint hw01 --reports=y
