@@ -43,19 +43,19 @@ Retrieve `Bluetooth <https://www.bluetooth.com/>`_ HW version number
    * - BT+VER
      - BT+VER:`version`
 
-   .. list-table:: Field description
-      :header-rows: 1
+.. list-table:: Field description
+  :header-rows: 1
 
-      * - Field
-        - Description
-      * - `version`
-        - Bluetooth HW version number.
+  * - Field
+    - Description
+  * - `version`
+    - Bluetooth HW version number.
 
-  Example:
+Example:
 
-     .. code::
+  .. code::
 
-      BT+VER:105.013.032
+  BT+VER:105.013.032
 
 Serial number
 -------------
