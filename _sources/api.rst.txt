@@ -30,6 +30,33 @@ Example:
 
   is returned when device is half discharged
 
+Bluetooth version
+-----------------
+
+Retrieve `Bluetooth <https://www.bluetooth.com/>`_ HW version number
+
+.. list-table::
+   :header-rows: 1
+
+   * - Request
+     - Response
+   * - BT+VER
+     - BT+VER:`version`
+
+.. list-table:: Field description
+  :header-rows: 1
+
+  * - Field
+    - Description
+  * - `version`
+    - Bluetooth HW version number.
+
+Example:
+
+  .. code::
+
+  BT+VER:105.013.032
+
 Serial number
 -------------
 
