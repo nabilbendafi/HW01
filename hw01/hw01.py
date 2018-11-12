@@ -147,6 +147,20 @@ class HW01(Peripheral):
         raw = self.get_raw(command)
         return raw
 
+    def get_version(self):
+        """Get Bluetooth version.
+
+        Returns:
+            str: Bluetooth version
+        """
+        command = b'BT+VER'
+        raw = self.get_raw(command)
+        try:
+            blt_version = raw.split(':')[1]
+            return blt_version
+        except IndexError:
+            self._log.error('Failed to parse Bluetooth version')
+
     def get_serial_number(self):
         """Get device serial number
 

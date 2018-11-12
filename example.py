@@ -13,5 +13,7 @@ if __name__ == '__main__':
         battery = h.get_battery_level()
         print(battery)
         h.set_distance_unit('metric')
+        version = h.get_version()
+        print('Bluetooth HW version: %s', version)
     except KeyboardInterrupt:
         pass

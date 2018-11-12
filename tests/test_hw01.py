@@ -94,7 +94,6 @@ class HW01TestSuite(unittest.TestCase):
         self.h.delegate.handleNotification(0xff, 'AT+??')
         self.assertEqual(tx_delegate.data, None)
 
-
     @mock.patch('bluepy.btle.Characteristic.read', return_value='HW01')
     def test_device_name(self, mock_device_name):
         """Test device name"""
@@ -119,6 +118,20 @@ class HW01TestSuite(unittest.TestCase):
         self.h = HW01('XX:XX:XX:XX:XX:XX')
 
         self.assertEqual(self.h.get_serial_number(), 'HW19999999')
+
+    @mock.patch('hw01.HW01.get_raw')
+    def test_bluetooth_version(self, mock_raw):
+        """Test Bluetooth version number"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+
+        mock_raw.return_value = 'BT+VER:105.013.032'
+        self.assertEqual(self.h.get_version(), '105.013.032')
+
+        with self.assertLogs('HW01') as log:
+            mock_raw.return_value = 'fail'
+            self.h.get_version()
+
+        self.assertEqual(log.output, ['ERROR:HW01:Failed to parse Bluetooth version'])
 
     @mock.patch('hw01.HW01.get_raw')
     def test_distance_unit(self, mock_raw):
