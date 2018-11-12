@@ -10,7 +10,7 @@ if __name__ == '__main__':
     h.setup_services()
 
     try:
-        battery = h.get_battery_info()
+        battery = h.get_battery_level()
         print(battery)
         h.set_distance_unit('metric')
     except KeyboardInterrupt:
