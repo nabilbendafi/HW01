@@ -3,6 +3,7 @@ Levono HW01 API
 """
 import logging
 import sys
+from datetime import datetime
 
 from bluepy.btle import Peripheral, Scanner, DefaultDelegate, ADDR_TYPE_RANDOM, BTLEException
 
@@ -126,6 +127,28 @@ class HW01(Peripheral):
         self.waitForNotifications(1.0)
         raw = self.delegate.data
         return raw.decode('utf-8').strip()
+
+    def set_datetime(self, year, month, day, hour=0, minute=0, second=0):
+        """Set device clock date and time.
+
+        Args:
+            year: Year
+            month: Month of year
+            day: Day of month
+            hour: Hour
+            minute: Minute
+            seconds: Seconds
+        """
+
+        try:
+            date_time = datetime(year, month, day, hour, minute, second)
+        except ValueError as ve:
+            self._log.error('Failed to set date and time: %s', ve)
+            raise
+        command = b'AT+DT=%s' % date_time.strftime('%Y%m%d%H%M%S').encode('utf-8')
+        raw = self.get_raw(command)
+        _ = raw.split(':')[1]
+        self._log.info('Date and time set to %s', date_time)
 
     def get_battery_level(self):
         """Get battery level information.

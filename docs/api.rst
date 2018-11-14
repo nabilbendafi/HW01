@@ -1,6 +1,35 @@
 API
 ===
 
+Date and time
+-------------
+
+Configure device date and time
+
+.. list-table::
+   :header-rows: 1
+
+   * - Request
+     - Response
+   * - AT+DT=`datetime`
+     - AT+DT:`datetime`
+
+.. list-table:: Field description
+   :header-rows: 1
+
+   * - Field
+     - Description
+   * - `datetime`
+     - Date and time. Format YYYYMMDDHHmmss
+
+Example:
+
+  .. code::
+
+    AT+DT=20151021072800
+
+  will set date and time to meet `Marty McFly` on Oct. 21 2015 at 07:28
+
 Battery level
 -------------
 

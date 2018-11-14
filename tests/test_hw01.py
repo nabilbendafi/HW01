@@ -133,6 +133,26 @@ class HW01TestSuite(unittest.TestCase):
 
         self.assertEqual(log.output, ['ERROR:HW01:Failed to parse Bluetooth version'])
 
+    @mock.patch('hw01.HW01.get_raw', return_value='AT+DT:20151025072800')
+    def test_valid_datetime(self, mock_raw):
+        """Test setting a date and time"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+
+        with self.assertLogs('HW01') as log:
+            self.h.set_datetime(2015, 10, 25, 7, 28)
+
+        self.assertEqual(log.output, ['INFO:HW01:Date and time set to 2015-10-25 07:28:00'])
+
+    def test_invalid_datetime(self):
+        """Test setting a date time with invalid month"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+
+        with self.assertRaises(ValueError) as _:
+            with self.assertLogs('HW01') as log:
+                self.h.set_datetime(2018, 99, 1)
+
+        self.assertEqual(log.output, ['ERROR:HW01:Failed to set date and time: month must be in 1..12'])
+
     @mock.patch('hw01.HW01.get_raw')
     def test_distance_unit(self, mock_raw):
         """Test setting displayed distance unit"""
