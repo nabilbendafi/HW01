@@ -84,7 +84,7 @@ Example:
 
   .. code::
 
-  BT+VER:105.013.032
+    BT+VER:105.013.032
 
 Serial number
 -------------
