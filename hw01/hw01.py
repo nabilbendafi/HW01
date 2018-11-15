@@ -128,7 +128,7 @@ class HW01(Peripheral):
         raw = self.delegate.data
         return raw.decode('utf-8').strip()
 
-    def set_datetime(self, year, month, day, hour=0, minute=0, second=0):
+    def set_datetime(self, year, month, day, hour=0, minute=0, second=0): # pylint: disable=too-many-arguments
         """Set device clock date and time.
 
         Args:
@@ -142,7 +142,7 @@ class HW01(Peripheral):
 
         try:
             date_time = datetime(year, month, day, hour, minute, second)
-        except ValueError as ve:
+        except ValueError as ve: # pylint: disable=invalid-name
             self._log.error('Failed to set date and time: %s', ve)
             raise
         command = b'AT+DT=%s' % date_time.strftime('%Y%m%d%H%M%S').encode('utf-8')
