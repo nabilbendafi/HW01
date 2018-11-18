@@ -1,33 +1,38 @@
-Lenovo HW01 [![Build Status](https://travis-ci.org/nabilbendafi/HW01.svg?branch=master)](https://travis-ci.org/nabilbendafi/HW01)
-===========
+# Lenovo HW01 [![Build Status](https://travis-ci.org/nabilbendafi/HW01.svg?branch=master)](https://travis-ci.org/nabilbendafi/HW01)
 
 Library to work with Lenovo HW01. To be used in place of Android [Lenovo Healthy](https://play.google.com/store/apps/details?id=com.lenovohw.base.framework) app.
 
-Dependencies
-------------
+## Dependencies
+
  - [bluepy](https://github.com/IanHarvey/bluepy)
 
 
-Traffic analysis
-----------------
+## Traffic analysis
+
 In order to analyse communication between official Android app [Lenovo Healthy](https://play.google.com/store/apps/details?id=com.lenovohw.base.framework&hl=en_US) and Lenovo HW01 device, additional app [NordicSemiconductor/Android-nRF-Connect](https://github.com/NordicSemiconductor/Android-nRF-Connect) is used to perform traffic logging.
 
 It allows us to write an API library to interact with the watch without using the official Android app.
 
-Debugging
----------
+## Debugging
+
+Scan for Bluetooth devices:
 ```bash
 $> sudo hcitool lescan
 LE Scan ...
 XX:XX:XX:XX:XX:XX HW01
 ```
 
+Connect to Bluetooth device:
+
 ```bash
 sudo gatttool --device=XX:XX:XX:XX:XX:XX -I -t random
 [XX:XX:XX:XX:XX:XX][LE]> connect
 Attempting to connect to XX:XX:XX:XX:XX:XX
 Connection successful
+```
 
+List device characteristics:
+```bash
 [XX:XX:XX:XX:XX:XX][LE]> primary
 attr handle: 0x0001, end grp handle: 0x0007 uuid: 00001800-0000-1000-8000-00805f9b34fb
 attr handle: 0x0008, end grp handle: 0x0008 uuid: 00001801-0000-1000-8000-00805f9b34fb
@@ -36,19 +41,19 @@ attr handle: 0x000f, end grp handle: 0x0014 uuid: 0000190b-0000-1000-8000-00805f
 attr handle: 0x0015, end grp handle: 0xffff uuid: 0000fee7-0000-1000-8000-00805f9b34fb
 ```
 
-Documentation
--------------
+## Documentation
+
 [hw01’s documentation](https://nabilbendafi.github.io/HW01/index.html)
 
-Test
-----
-```bash
+## Test
+
+```
 pip install -r dev-requirements.txt
 ./setup.py nosetests
 ```
 
-References
-----------
+## References
+
  - [creotiv/MiBand2](https://github.com/creotiv/MiBand2)
  - [My journey towards Reverse Engineering a Smart Band — Bluetooth-LE RE](https://medium.com/@arunmag/my-journey-towards-reverse-engineering-a-smart-band-bluetooth-le-re-d1dea00e4de2)
  - [Xiaomi Mi Band BLE Protocol reverse-engineering and API](http://androiders-newbie.blogspot.com/2014/12/xiaomi-mi-band-ble-protocol-reverse.html)
