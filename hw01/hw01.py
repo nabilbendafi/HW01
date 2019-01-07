@@ -128,14 +128,17 @@ class HW01(Peripheral):
         raw = self.delegate.data
         return raw.decode('utf-8').strip()
 
-    def now(func):
+    def now(func): # pylint: disable=no-self-argument
+        """Decorator that sets current time
+        """
+        # pylint: disable=E1102
         def func_wrapper(self, *args, **kwargs):
             try:
-                year, month, day = args[0:3]
-            except ValueError as ve: # pylint: disable=invalid-name
-                n = datetime.datetime.now()
-                return func(self, n.year, n.month, n.day,
-                            n.hour, n.minute, n.second)
+                _, _, _ = args[0:3] # pylint: disable=unbalanced-tuple-unpacking
+            except ValueError:
+                cur = datetime.datetime.now()
+                return func(self, cur.year, cur.month, cur.day,
+                            cur.hour, cur.minute, cur.second)
             return func(self, *args, **kwargs)
         return func_wrapper
 
