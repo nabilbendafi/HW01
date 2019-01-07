@@ -2,6 +2,7 @@ import unittest
 
 from unittest import mock
 
+import datetime
 from bluepy.btle import Service, Characteristic, Descriptor
 from hw01 import HW01, UUIDS, TXDelegate
 
@@ -152,6 +153,23 @@ class HW01TestSuite(unittest.TestCase):
                 self.h.set_datetime(2018, 99, 1)
 
         self.assertEqual(log.output, ['ERROR:HW01:Failed to set date and time: month must be in 1..12'])
+
+    @mock.patch('hw01.HW01.get_raw', return_value='AT+DT:20190115231251')
+    def test_valid_current_datetime(self, mock_raw):#, mock_now):
+        """Test setting a date and time to current local time"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+
+        class MockDatetime(datetime.datetime):
+            @classmethod
+            def now(cls):
+                return cls(2019, 1, 15, 23, 12, 51)
+
+        datetime.datetime = MockDatetime
+
+        with self.assertLogs('HW01') as log:
+            self.h.set_datetime()
+
+        self.assertEqual(log.output, ['INFO:HW01:Date and time set to 2019-01-15 23:12:51'])
 
     @mock.patch('hw01.HW01.get_raw')
     def test_distance_unit(self, mock_raw):

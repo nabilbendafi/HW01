@@ -3,7 +3,7 @@ Levono HW01 API
 """
 import logging
 import sys
-from datetime import datetime
+import datetime
 
 from bluepy.btle import Peripheral, Scanner, DefaultDelegate, ADDR_TYPE_RANDOM, BTLEException
 
@@ -128,6 +128,18 @@ class HW01(Peripheral):
         raw = self.delegate.data
         return raw.decode('utf-8').strip()
 
+    def now(func):
+        def func_wrapper(self, *args, **kwargs):
+            try:
+                year, month, day = args[0:3]
+            except ValueError as ve: # pylint: disable=invalid-name
+                n = datetime.datetime.now()
+                return func(self, n.year, n.month, n.day,
+                            n.hour, n.minute, n.second)
+            return func(self, *args, **kwargs)
+        return func_wrapper
+
+    @now
     def set_datetime(self, year, month, day, hour=0, minute=0, second=0): # pylint: disable=too-many-arguments
         """Set device clock date and time.
 
@@ -141,7 +153,7 @@ class HW01(Peripheral):
         """
 
         try:
-            date_time = datetime(year, month, day, hour, minute, second)
+            date_time = datetime.datetime(year, month, day, hour, minute, second)
         except ValueError as ve: # pylint: disable=invalid-name
             self._log.error('Failed to set date and time: %s', ve)
             raise
