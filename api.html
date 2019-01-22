@@ -48,7 +48,7 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>AT+DT=`datetime`</td>
+<tr class="row-even"><td>AT+DT=<cite>datetime</cite></td>
 <td>AT+DT:<cite>datetime</cite></td>
 </tr>
 </tbody>
@@ -77,6 +77,47 @@
 </div>
 <p>will set date and time to meet <cite>Marty McFly</cite> on Oct. 21 2015 at 07:28</p>
 </div></blockquote>
+<p>Configure device time format</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Request</th>
+<th class="head">Response</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>AT+TIMEFORMAT=<cite>format</cite></td>
+<td>AT+TIMEFORMAT:<cite>format</cite></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils" id="id2">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>format</cite></td>
+<td>Time format: <strong>0</strong> for <em>12h</em>, <strong>1</strong> for <em>24h</em></td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<blockquote>
+<div><div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AT</span><span class="o">+</span><span class="n">TIMEFORMAT</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>will set time format to 24h.</p>
+</div></blockquote>
 </div>
 <div class="section" id="battery-level">
 <h2>Battery level<a class="headerlink" href="#battery-level" title="Permalink to this headline">¶</a></h2>
@@ -97,8 +138,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id2">
-<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id3">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -141,8 +182,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id3">
-<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id4">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -184,8 +225,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id4">
-<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id5">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -229,8 +270,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id5">
-<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id6">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -255,8 +296,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id6">
-<caption><span class="caption-text">Day activation</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id7">
+<caption><span class="caption-text">Day activation</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -344,8 +385,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id7">
-<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id8">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -388,8 +429,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id8">
-<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id9">
+<caption><span class="caption-text">Field description</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
 <col width="50%" />
