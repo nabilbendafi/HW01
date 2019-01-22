@@ -30,6 +30,32 @@ Example:
 
   will set date and time to meet `Marty McFly` on Oct. 21 2015 at 07:28
 
+Configure device time format
+
+.. list-table::
+   :header-rows: 1
+
+   * - Request
+     - Response
+   * - AT+TIMEFORMAT=`format`
+     - AT+TIMEFORMAT:`format`
+
+.. list-table:: Field description
+   :header-rows: 1
+
+   * - Field
+     - Description
+   * - `format`
+     - Time format: **0** for *12h*, **1** for *24h*
+
+Example:
+
+  .. code::
+
+    AT+TIMEFORMAT=1
+
+  will set time format to 24h.
+
 Battery level
 -------------
 

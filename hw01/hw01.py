@@ -165,6 +165,17 @@ class HW01(Peripheral):
         _ = raw.split(':')[1]
         self._log.info('Date and time set to %s', date_time)
 
+    def set_timeformat(self, fmt='12h'):
+        """
+        Args:
+            format: Time format `12h` or `24h`
+
+        """
+        command = b'AT+TIMEFORMAT=%d' % 0 if fmt == '12h' else 1
+        raw = self.get_raw(command)
+        _ = raw.split(':')[1]
+        self._log.info('Time format set to %s', '12h' if fmt == '12h' else '24h')
+
     def get_battery_level(self):
         """Get battery level information.
 

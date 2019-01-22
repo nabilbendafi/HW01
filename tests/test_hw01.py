@@ -154,6 +154,27 @@ class HW01TestSuite(unittest.TestCase):
 
         self.assertEqual(log.output, ['ERROR:HW01:Failed to set date and time: month must be in 1..12'])
 
+    @mock.patch('hw01.HW01.get_raw')
+    def test_timeformat(self, mock_raw):
+        """Test setting a time format to 12h/24h"""
+        self.h = HW01('XX:XX:XX:XX:XX:XX')
+
+        mock_raw.side_effect = ['AT+TIMEFORMAT:1',
+                                'AT+TIMEFORMAT:0',
+                                'AT+TIMEFORMAT:1',
+                                'AT+TIMEFORMAT:1']
+
+        formats = ['24h', '12h', 'unknown', None]
+
+        with self.assertLogs('HW01') as log:
+            for format in formats:
+                self.h.set_timeformat(format)
+
+        self.assertEqual(log.output, ['INFO:HW01:Time format set to 24h',
+                                      'INFO:HW01:Time format set to 12h',
+                                      'INFO:HW01:Time format set to 24h',
+                                      'INFO:HW01:Time format set to 24h'])
+
     @mock.patch('hw01.HW01.get_raw', return_value='AT+DT:20190115231251')
     def test_valid_current_datetime(self, mock_raw):#, mock_now):
         """Test setting a date and time to current local time"""
