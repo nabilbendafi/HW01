@@ -11,7 +11,7 @@ Configure device date and time
 
    * - Request
      - Response
-   * - AT+DT=`datetime`
+   * - AT+DT=\ `datetime`
      - AT+DT:`datetime`
 
 .. list-table:: Field description
@@ -37,7 +37,7 @@ Configure device time format
 
    * - Request
      - Response
-   * - AT+TIMEFORMAT=`format`
+   * - AT+TIMEFORMAT=\ `format`
      - AT+TIMEFORMAT:`format`
 
 .. list-table:: Field description
