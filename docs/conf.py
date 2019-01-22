@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'hw01'
-copyright = '2018, Nabil BENDAFI'
+copyright = '2018-2019, Nabil BENDAFI'
 author = 'Nabil BENDAFI'
 
 # The short X.Y version
