@@ -171,7 +171,7 @@ class HW01(Peripheral):
             format: Time format `12h` or `24h`
 
         """
-        command = b'AT+TIMEFORMAT=%d' % 0 if fmt == '12h' else 1
+        command = b'AT+TIMEFORMAT=%d' % (0 if fmt == '12h' else 1)
         raw = self.get_raw(command)
         _ = raw.split(':')[1]
         self._log.info('Time format set to %s', '12h' if fmt == '12h' else '24h')
